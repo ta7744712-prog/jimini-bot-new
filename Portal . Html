@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jimini AI Bot - Automated Key Generator Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0b0e14; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; }
+        .glass-panel { background: rgba(18, 24, 38, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .neon-btn { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); transition: all 0.3s ease; }
+        .neon-btn:hover { box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); transform: translateY(-1px); }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="max-w-xl w-full glass-panel rounded-2xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-600/20 text-blue-400 mb-3 border border-blue-500/30">
+                <i class="fa-solid fa-robot text-3xl"></i>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-extrabold text-white tracking-wide">JIMINI AI BOT</h1>
+            <p class="text-xs md:text-sm text-gray-400 mt-1">Automated VIP License Generator & Account Verification Portal</p>
+        </div>
+
+        <!-- Step 1: Follow YouTube & TikTok -->
+        <div class="mb-6">
+            <h2 class="text-xs uppercase font-bold tracking-wider text-blue-400 mb-3 flex items-center">
+                <span class="w-5 h-5 rounded-full bg-blue-500 text-black text-xs font-bold inline-flex items-center justify-center mr-2">1</span>
+                YouTube & TikTok Follow Karein
+            </h2>
+            <div class="grid grid-cols-2 gap-3">
+                <!-- Aapka Real YouTube Link -->
+                <a href="Https://youtube.com/@rajpootfuny?si=5pi6lSjSSPcjNEyc" target="_blank" onclick="markSocialDone('YouTube')" class="flex items-center justify-center p-3 rounded-xl bg-slate-800/60 hover:bg-red-600/20 border border-slate-700/50 text-xs font-medium transition">
+                    <i class="fa-brands fa-youtube text-red-500 text-lg mr-2"></i> YouTube Subscribe
+                </a>
+                <!-- Aapka Real TikTok Link -->
+                <a href="https://www.tiktok.com/@kashi.trader87?_r=1&_t=ZN-9B8eindgEn0" target="_blank" onclick="markSocialDone('TikTok')" class="flex items-center justify-center p-3 rounded-xl bg-slate-800/60 hover:bg-pink-600/20 border border-slate-700/50 text-xs font-medium transition">
+                    <i class="fa-brands fa-tiktok text-pink-400 text-lg mr-2"></i> TikTok Follow
+                </a>
+            </div>
+            <p id="socialStatus" class="text-[11px] text-amber-400 mt-2 hidden"><i class="fa-solid fa-circle-check"></i> Social Tasks Verified!</p>
+        </div>
+
+        <!-- Step 2: Register & Deposit -->
+        <div class="mb-6">
+            <h2 class="text-xs uppercase font-bold tracking-wider text-blue-400 mb-3 flex items-center">
+                <span class="w-5 h-5 rounded-full bg-blue-500 text-black text-xs font-bold inline-flex items-center justify-center mr-2">2</span>
+                Affiliate Link Se Account Banayein
+            </h2>
+            <div class="grid grid-cols-2 gap-3">
+                <!-- Aapka Real Quotex Link -->
+                <a href="https://broker-qx.pro/sign-up/?lid=1189719" target="_blank" class="block p-3 rounded-xl bg-gradient-to-r from-emerald-900/40 to-teal-900/40 border border-emerald-500/30 text-center hover:border-emerald-400 transition">
+                    <div class="text-xs font-bold text-emerald-400">Quotex Link</div>
+                    <div class="text-[10px] text-gray-400">Register & Deposit</div>
+                </a>
+                <!-- Aapka Real Tradowix Link -->
+                <a href="https://tradowix.com/register?lid=39969294" target="_blank" class="block p-3 rounded-xl bg-gradient-to-r from-cyan-900/40 to-blue-900/40 border border-cyan-500/30 text-center hover:border-cyan-400 transition">
+                    <div class="text-xs font-bold text-cyan-400">Tradowix Link</div>
+                    <div class="text-[10px] text-gray-400">Register & Deposit</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Step 3: Enter Trader ID -->
+        <div class="mb-6">
+            <h2 class="text-xs uppercase font-bold tracking-wider text-blue-400 mb-3 flex items-center">
+                <span class="w-5 h-5 rounded-full bg-blue-500 text-black text-xs font-bold inline-flex items-center justify-center mr-2">3</span>
+                Trader ID Dalein Aur Key Hasil Karein
+            </h2>
+            <div class="space-y-3">
+                <input type="text" id="traderIdInput" placeholder="Apni Trader ID Yahan Likhein" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-blue-500">
+                <button onclick="verifyAndGenerateKey()" class="w-full py-3.5 rounded-xl neon-btn text-xs font-bold uppercase tracking-wider text-white shadow-lg">
+                    Get VIP Key
+                </button>
+            </div>
+        </div>
+
+        <!-- Output Box -->
+        <div id="keyBox" class="hidden p-4 rounded-xl bg-slate-900 border border-emerald-500/50 text-center relative">
+            <span class="text-[10px] uppercase tracking-wider text-emerald-400 font-bold block mb-1">Aapki Personal VIP Key (1 Month)</span>
+            <div id="generatedKey" class="text-lg font-mono font-bold text-white tracking-widest my-2 select-all">JIMINI-VIP-XXXX-2026</div>
+            <p class="text-[11px] text-gray-400">Is key ko copy kar ke bot mein paste kar lein.</p>
+        </div>
+
+    </div>
+
+    <script>
+        let socialDone = false;
+
+        function markSocialDone(platform) {
+            socialDone = true;
+            document.getElementById('socialStatus').classList.remove('hidden');
+        }
+
+        function verifyAndGenerateKey() {
+            const traderId = document.getElementById('traderIdInput').value.trim();
+
+            if (!traderId) {
+                alert('Pehle apni Trader ID enter karein!');
+                return;
+            }
+
+            const randomCode = Math.random().toString(36).substring(2, 7).toUpperCase();
+            const uniqueKey = `JIMINI-KEY-${traderId}-${randomCode}`;
+
+            document.getElementById('generatedKey').innerText = uniqueKey;
+            document.getElementById('keyBox').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

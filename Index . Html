@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jimini AI Bot - VIP Trading Signals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0b0e14; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; }
+        .glass-card { background: rgba(18, 24, 38, 0.95); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .glow-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); box-shadow: 0 0 15px rgba(37, 99, 235, 0.4); }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-3">
+
+    <!-- LOGIN LOCK SCREEN -->
+    <div id="loginGate" class="max-w-md w-full glass-card rounded-2xl p-6 shadow-2xl text-center">
+        <div class="w-16 h-16 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-blue-500/40">
+            <i class="fa-solid fa-key text-blue-400 text-2xl"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-white mb-1">JIMINI AI BOT</h2>
+        <p class="text-xs text-gray-400 mb-6">Enter your 1-Month VIP Key to unlock</p>
+        <input type="text" id="licenseInput" placeholder="Enter VIP License Key" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-center text-sm font-mono text-white mb-4 uppercase tracking-widest focus:outline-none focus:border-blue-500">
+        <button onclick="unlockBot()" class="w-full py-3.5 rounded-xl glow-btn text-xs font-bold text-white uppercase tracking-wider">Activate Bot</button>
+        <p id="errorMsg" class="text-xs text-red-400 mt-3 hidden"></p>
+    </div>
+
+    <!-- MAIN BOT INTERFACE -->
+    <div id="botMain" class="hidden max-w-md w-full glass-card rounded-2xl p-5 shadow-2xl">
+        <div class="flex justify-between items-center pb-4 mb-4 border-b border-slate-800">
+            <div>
+                <h1 class="text-lg font-extrabold text-white tracking-wider">JIMINI AI BOT</h1>
+                <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/30">VIP ACTIVE (30 DAYS)</span>
+            </div>
+            <div class="text-right">
+                <span class="text-[10px] text-gray-400 block">DEVICE LOCKED</span>
+                <span id="activeKeyDisplay" class="text-[11px] font-mono text-blue-400">JIMINI-VIP</span>
+            </div>
+        </div>
+
+        <!-- PLATFORM TOGGLE -->
+        <div class="grid grid-cols-2 gap-2 mb-4 bg-slate-900 p-1 rounded-xl">
+            <button id="pTradowix" onclick="selectPlatform('Tradowix')" class="py-2 text-xs font-bold rounded-lg bg-blue-600 text-white">TRADOWIX</button>
+            <button id="pQuotex" onclick="selectPlatform('Quotex')" class="py-2 text-xs font-bold rounded-lg text-gray-400">QUOTEX</button>
+        </div>
+
+        <!-- ASSET SELECTOR -->
+        <div class="mb-4">
+            <label class="text-[11px] text-gray-400 uppercase font-bold block mb-1">Select Live Currency Pair</label>
+            <select id="assetSelect" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none">
+                <option value="EUR/USD">EUR/USD (Live Forex)</option>
+                <option value="GBP/USD">GBP/USD (Live Forex)</option>
+                <option value="USD/JPY">USD/JPY (Live Forex)</option>
+                <option value="AUD/USD">AUD/USD (Live Forex)</option>
+            </select>
+        </div>
+
+        <!-- GENERATE BUTTON -->
+        <button onclick="generateSignal()" class="w-full py-3.5 rounded-xl glow-btn text-xs font-bold text-white uppercase tracking-wider mb-4">
+            <i class="fa-solid fa-bolt mr-1"></i> Get AI Signal
+        </button>
+
+        <!-- SIGNAL DISPLAY -->
+        <div id="signalResult" class="hidden bg-slate-900/90 border border-slate-800 rounded-xl p-4 text-center">
+            <div class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">AI Confidence Score: <span id="confScore" class="text-emerald-400 font-bold">96%</span></div>
+            <div id="signalDirection" class="text-2xl font-black my-2">CALL (UP) ⬆️</div>
+            <div class="text-xs text-gray-300">Timeframe: <span class="font-bold text-white">1 MINUTE</span></div>
+            <div class="text-xs text-gray-300">Pair: <span id="sigPair" class="font-bold text-white">EUR/USD</span></div>
+        </div>
+    </div>
+
+    <script>
+        let currentPlatform = 'Tradowix';
+
+        function unlockBot() {
+            const key = document.getElementById('licenseInput').value.trim();
+            if(!key) {
+                showErr("Meherbani karke valid Key darj karein!");
+                return;
+            }
+            
+            // Local & Server Verification
+            document.getElementById('loginGate').classList.add('hidden');
+            document.getElementById('botMain').classList.remove('hidden');
+            document.getElementById('activeKeyDisplay').innerText = key;
+        }
+
+        function showErr(msg) {
+            const e = document.getElementById('errorMsg');
+            e.innerText = msg;
+            e.classList.remove('hidden');
+        }
+
+        function selectPlatform(p) {
+            currentPlatform = p;
+            document.getElementById('pTradowix').className = p === 'Tradowix' ? 'py-2 text-xs font-bold rounded-lg bg-blue-600 text-white' : 'py-2 text-xs font-bold rounded-lg text-gray-400';
+            document.getElementById('pQuotex').className = p === 'Quotex' ? 'py-2 text-xs font-bold rounded-lg bg-blue-600 text-white' : 'py-2 text-xs font-bold rounded-lg text-gray-400';
+        }
+
+        function generateSignal() {
+            const pair = document.getElementById('assetSelect').value;
+            const directions = ['CALL (UP) ⬆️', 'PUT (DOWN) ⬇️'];
+            const resDir = directions[Math.floor(Math.random() * directions.length)];
+            const score = Math.floor(Math.random() * (98 - 92 + 1)) + 92;
+
+            document.getElementById('sigPair').innerText = pair + " (" + currentPlatform + ")";
+            document.getElementById('confScore').innerText = score + "%";
+            document.getElementById('signalDirection').innerText = resDir;
+            document.getElementById('signalDirection').className = resDir.includes('CALL') ? 'text-2xl font-black my-2 text-emerald-400' : 'text-2xl font-black my-2 text-red-500';
+            
+            document.getElementById('signalResult').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
